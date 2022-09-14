@@ -1,9 +1,0 @@
-Library/
-Logs/
-Temp/
-Packages/
-ProjectSettings/
-UserSettings/
-.vsconfig
-alchipif.sln
-*.csproj
