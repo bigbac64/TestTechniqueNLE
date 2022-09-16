@@ -27,8 +27,14 @@ public class Building : MonoBehaviour
         get { return buildingName; }
         set { 
             buildingName = value;
-            transform.Find("Name").GetComponent<Text>().text = value;
+            UpdateUITextName();
         }
+    }
+
+    // Met à jour le texte du Gameobject UI nommé Name
+    public void UpdateUITextName()
+    {
+        transform.Find("Name").GetComponent<Text>().text = buildingName;
     }
 
     public int Cost
@@ -41,6 +47,12 @@ public class Building : MonoBehaviour
         }
     }
 
+    // Met à jour le texte du Gameobject UI nommé Cost
+    public void UpdateUITextCost()
+    {
+        transform.Find("Cost").GetComponent<Text>().text = cost.ToString();
+    }
+
     // ajoute une source de revenue au batiment si elle n'est pas déjà présente dans la liste
     public void AddRevenue(Revenue rev)
     {
@@ -48,15 +60,19 @@ public class Building : MonoBehaviour
             return;
 
         revenues.Add(rev);
-        transform.Find("Product").GetComponent<Text>().text = Production().ToString();
+        UpdateUITextRevenue();
     }
 
     // retire une source de revenue au batiment 
     public void RemoveRevenue(Revenue rev)
     {
         revenues.Remove(rev);
-
-        transform.Find("Product").GetComponent<Text>().text = Production().ToString();
+        UpdateUITextRevenue();
     }
 
+    // Met à jour le texte du Gameobject UI nommé Product
+    public void UpdateUITextRevenue()
+    {
+        transform.Find("Product").GetComponent<Text>().text = Production().ToString();
+    }
 }

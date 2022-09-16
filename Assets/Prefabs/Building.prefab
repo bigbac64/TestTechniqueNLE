@@ -114,8 +114,8 @@ RectTransform:
   - {fileID: 8236769039644148882}
   - {fileID: 2860917807184329492}
   - {fileID: 6390666511569830491}
-  - {fileID: 6120045861363580155}
   - {fileID: 7503822452292055888}
+  - {fileID: 6120045861363580155}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 82766792658047235}
   - component: {fileID: 4139524620389315396}
   m_Layer: 5
-  m_Name: Cost
+  m_Name: Product
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -207,7 +207,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6276842115502019211}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -428,7 +428,7 @@ GameObject:
   - component: {fileID: 2235639524056301614}
   - component: {fileID: 2492929024903619533}
   m_Layer: 5
-  m_Name: Product
+  m_Name: Cost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -446,7 +446,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6276842115502019211}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
