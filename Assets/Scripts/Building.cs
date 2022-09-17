@@ -31,10 +31,14 @@ public class Building : MonoBehaviour
         }
     }
 
-    // Met à jour le texte du Gameobject UI nommé Name
-    public void UpdateUITextName()
+    public List<Revenue> Revenues
     {
-        transform.Find("Name").GetComponent<Text>().text = buildingName;
+        get { return revenues; }
+        set
+        {
+            revenues = value;
+            UpdateUITextRevenue();
+        }
     }
 
     public int Cost
@@ -46,6 +50,13 @@ public class Building : MonoBehaviour
             transform.Find("Cost").GetComponent<Text>().text = value.ToString();
         }
     }
+
+    // Met à jour le texte du Gameobject UI nommé Name
+    public void UpdateUITextName()
+    {
+        transform.Find("Name").GetComponent<Text>().text = buildingName;
+    }
+
 
     // Met à jour le texte du Gameobject UI nommé Cost
     public void UpdateUITextCost()
