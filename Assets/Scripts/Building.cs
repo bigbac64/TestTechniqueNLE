@@ -1,3 +1,5 @@
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +13,10 @@ public class Building : MonoBehaviour
     [SerializeField]
     int cost;
 
-    // renvoie la somme des sources de revenue
+    /// <summary>
+    /// Calcule la production d'Aer selon les revenues associé
+    /// </summary>
+    /// <returns>le total des revenues</returns>
     public int Production()
     {
         int prod = 0;
@@ -22,6 +27,7 @@ public class Building : MonoBehaviour
         return prod;
     }
 
+    
     public string BuildingName
     {
         get { return buildingName; }
@@ -41,6 +47,25 @@ public class Building : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Permet de générer la liste des noms de revenu au format string
+    /// </summary>
+    /// <returns>la liste des noms de revenu</returns>
+    public string GetNamesOfRevenue()
+    {
+        if (revenues.Count == 0)
+            return "";
+
+        string names = "";
+
+        foreach (Revenue revenue in revenues)
+        {
+            names += Enum.GetName(typeof(Revenue), revenue) + ", ";
+        }
+
+        return names.Substring(0, names.Length-2); 
+    }
+
     public int Cost
     {
         get { return cost; }
@@ -51,37 +76,26 @@ public class Building : MonoBehaviour
         }
     }
 
-    // Met à jour le texte du Gameobject UI nommé Name
+    /// <summary>
+    /// Met à jour le texte du Gameobject UI nommé Name
+    /// </summary>
     public void UpdateUITextName()
     {
         transform.Find("Name").GetComponent<Text>().text = buildingName;
     }
 
 
-    // Met à jour le texte du Gameobject UI nommé Cost
+    /// <summary>
+    /// Met à jour le texte du Gameobject UI nommé Cost
+    /// </summary>
     public void UpdateUITextCost()
     {
         transform.Find("Cost").GetComponent<Text>().text = cost.ToString();
     }
 
-    // ajoute une source de revenue au batiment si elle n'est pas déjà présente dans la liste
-    public void AddRevenue(Revenue rev)
-    {
-        if (revenues.Contains(rev))
-            return;
-
-        revenues.Add(rev);
-        UpdateUITextRevenue();
-    }
-
-    // retire une source de revenue au batiment 
-    public void RemoveRevenue(Revenue rev)
-    {
-        revenues.Remove(rev);
-        UpdateUITextRevenue();
-    }
-
-    // Met à jour le texte du Gameobject UI nommé Product
+    /// <summary>
+    /// Met à jour le texte du Gameobject UI nommé Product
+    /// </summary>
     public void UpdateUITextRevenue()
     {
         transform.Find("Product").GetComponent<Text>().text = Production().ToString();

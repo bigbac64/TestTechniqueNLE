@@ -4,19 +4,14 @@ using UnityEngine;
 
 public class CycleManager : MonoBehaviour
 {
-    public GameObject prefabBuilding;
-    public GameObject prefabBuildConstruction;
-
     float timeCycle = 60f;
     int aerCurrent;
     int aerLastCycle;
 
-    List<Building> buildingList;
 
     // Start is called before the first frame update
     void Start()
     {
-        buildingList = new List<Building>();
         aerCurrent = 1000;
         aerLastCycle = 0;
 
@@ -25,7 +20,6 @@ public class CycleManager : MonoBehaviour
 
     void Cycle()
     {
-        CountProductCycle();
     }
 
     public void BuyBuilding(Building bd)
@@ -34,21 +28,7 @@ public class CycleManager : MonoBehaviour
             return;
 
         aerCurrent -= bd.Cost;
-        buildingList.Add(bd);
     }
 
-    public void RemoveBuilding(Building bd)
-    {
-        buildingList.Remove(bd);
-    }
 
-    void CountProductCycle()
-    {
-        aerLastCycle = 0;
-
-        foreach (Building bd in buildingList)
-        {
-            aerLastCycle += bd.Production();
-        }
-    }
 }
