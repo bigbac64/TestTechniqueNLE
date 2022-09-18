@@ -24,9 +24,7 @@ public class ControlUIConstructor : MonoBehaviour
         GameObject construct = Instantiate(prefabBuildConstruction, parentBuildings);
 
         // modifie les informations du building construit
-        construct.transform.Find("NameBuilding").GetComponent<Text>().text = building.BuildingName;
-        construct.transform.Find("Product").GetComponent<Text>().text = building.Production().ToString();
-        construct.transform.Find("NamesRevenue").GetComponent<Text>().text = building.GetNamesOfRevenue();
+        construct.GetComponent<Building>().Init(building.BuildingName, building.Revenues, building.Cost);
 
         // défini l'action du bouton qui retire le gameobject de la scène et de la liste
         construct.transform
@@ -87,6 +85,7 @@ public class ControlUIConstructor : MonoBehaviour
         ResizeContent();
     }
 
+
     /// <summary>
     /// Permet de redimentionner le Gameobject de la scène (Content) pour avoir un scrolling cohérent
     /// </summary>
@@ -100,6 +99,8 @@ public class ControlUIConstructor : MonoBehaviour
 
     /// <summary>
     /// Permet de retourner la nouvelle position du gameobject en fonction de la position indexé
+    /// 
+    /// S'adapte en fonction du scale du canvas
     /// </summary>
     /// <param name="go">Le Gameobject à repositionner</param>
     /// <param name="index">La prochaine position indexé</param>
@@ -109,7 +110,11 @@ public class ControlUIConstructor : MonoBehaviour
         Vector3 rectPos = go.transform.position;
         RectTransform prefabRect = prefabBuildConstruction.GetComponent<RectTransform>();
         RectTransform parent = go.transform.parent.GetComponent<RectTransform>();
-        return new Vector3(rectPos.x, parent.position.y - prefabRect.sizeDelta.y * index, rectPos.z);
+
+        Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+
+
+        return new Vector3(rectPos.x, parent.position.y - prefabRect.sizeDelta.y * canvas.scaleFactor * index, rectPos.z);
     }
 
     /// <summary>
@@ -132,4 +137,9 @@ public class ControlUIConstructor : MonoBehaviour
         }
         go.transform.position = to;
     }
+
+    public List<GameObject> Constructions
+    {
+        get { return constructions; }
+    } 
 }

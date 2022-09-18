@@ -63,15 +63,33 @@ public class ControlUIBuilding : MonoBehaviour
                 .GetComponent<Button>()
                 .onClick
                 .AddListener(delegate {
+                    Building building = build.GetComponent<Building>();
+
+                    if (!Purchase(building.Cost))
+                        return;
+
                     GameObject
                     .Find("PanelBuilder")
                     .GetComponent<ControlUIConstructor>()
-                    .MakeConstruction(build.GetComponent<Building>());
+                    .MakeConstruction(building);
                 });
         }
 
         // On adapte la position du gameobject Content afin d'adapter le scrolling horizontal
         RectTransform parentBuildingsRect = parentBuildings.GetComponent<RectTransform>();
         parentBuildingsRect.sizeDelta = new Vector2 (adaptedPosX + prefabRect.offsetMax.x, parentBuildingsRect.sizeDelta.y);
+    }
+
+
+    public bool Purchase(int cost)
+    {
+        ControlUICycle economy = GameObject.Find("GameInfo").GetComponent<ControlUICycle>();
+
+        if(economy.AerCurrent < cost)
+            return false;
+
+        economy.Outlay(cost);
+
+        return true;
     }
 }

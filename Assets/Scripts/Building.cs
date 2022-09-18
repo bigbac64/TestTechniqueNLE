@@ -14,6 +14,24 @@ public class Building : MonoBehaviour
     int cost;
 
     /// <summary>
+    /// Permet d'initialisé un Building
+    /// </summary>
+    /// <param name="buildingName">Le nom du batiment</param>
+    /// <param name="revenues">La liste des revenus</param>
+    /// <param name="cost">Le cout du batiment</param>
+    public void Init(string buildingName, List<Revenue> revenues, int cost)
+    {
+        this.buildingName = buildingName;
+        this.revenues = revenues;
+        this.cost = cost;
+
+        UpdateUITextName();
+        UpdateUITextRevenue();
+        UpdateUITextCost();
+        UpdateUITextNamesRevenue();
+    }
+
+    /// <summary>
     /// Calcule la production d'Aer selon les revenues associé
     /// </summary>
     /// <returns>le total des revenues</returns>
@@ -47,6 +65,17 @@ public class Building : MonoBehaviour
         }
     }
 
+    public int Cost
+    {
+        get { return cost; }
+        set
+        {
+            cost = value;
+            UpdateUITextCost();
+        }
+    }
+
+
     /// <summary>
     /// Permet de générer la liste des noms de revenu au format string
     /// </summary>
@@ -63,41 +92,47 @@ public class Building : MonoBehaviour
             names += Enum.GetName(typeof(Revenue), revenue) + ", ";
         }
 
-        return names.Substring(0, names.Length-2); 
-    }
-
-    public int Cost
-    {
-        get { return cost; }
-        set
-        {
-            cost = value;
-            transform.Find("Cost").GetComponent<Text>().text = value.ToString();
-        }
+        return names.Substring(0, names.Length - 2);
     }
 
     /// <summary>
-    /// Met à jour le texte du Gameobject UI nommé Name
+    /// Met à jour le texte du Gameobject UI nommé Name si il existe
     /// </summary>
     public void UpdateUITextName()
     {
-        transform.Find("Name").GetComponent<Text>().text = buildingName;
+        Transform tfName = transform.Find("Name");
+        if (tfName != null)
+            tfName.GetComponent<Text>().text = buildingName;
     }
 
 
     /// <summary>
-    /// Met à jour le texte du Gameobject UI nommé Cost
+    /// Met à jour le texte du Gameobject UI nommé Cost si il existe
     /// </summary>
     public void UpdateUITextCost()
     {
-        transform.Find("Cost").GetComponent<Text>().text = cost.ToString();
+        Transform tfCost = transform.Find("Cost");
+        if (tfCost != null)
+            tfCost.GetComponent<Text>().text = cost.ToString();
     }
 
     /// <summary>
-    /// Met à jour le texte du Gameobject UI nommé Product
+    /// Met à jour le texte du Gameobject UI nommé Product si il existe
     /// </summary>
     public void UpdateUITextRevenue()
     {
-        transform.Find("Product").GetComponent<Text>().text = Production().ToString();
+        Transform tfProduct = transform.Find("Product");
+        if (tfProduct != null)
+            tfProduct.GetComponent<Text>().text = Production().ToString();
+    }
+
+    /// <summary>
+    /// Met à jour le texte du Gameobject UI nommé NamesRevenue si il existe
+    /// </summary>
+    public void UpdateUITextNamesRevenue()
+    {
+        Transform tfNamesRevenue = transform.Find("NamesRevenue");
+        if (tfNamesRevenue != null)
+            tfNamesRevenue.GetComponent<Text>().text = GetNamesOfRevenue();
     }
 }
