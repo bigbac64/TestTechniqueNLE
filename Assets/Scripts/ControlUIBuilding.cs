@@ -8,6 +8,8 @@ public class ControlUIBuilding : MonoBehaviour
 {
     public GameObject prefabBuilding;
     public List<GameObject> buildings;
+    public Color errorColor;
+    public float errorTime;
 
     private void Start()
     {
@@ -45,9 +47,11 @@ public class ControlUIBuilding : MonoBehaviour
             if (i < nbChilds)
             {
                 Building actualBuilding = build.GetComponent<Building>();
-                actualBuilding.BuildingName = savePresetBulding[i].BuildingName;
-                actualBuilding.Cost = savePresetBulding[i].Cost;
-                actualBuilding.Revenues = savePresetBulding[i].Revenues;
+                actualBuilding.Init(
+                    savePresetBulding[i].BuildingName, 
+                    savePresetBulding[i].Revenues, 
+                    savePresetBulding[i].Cost, 
+                    savePresetBulding[i].Color);
             }
 
             // On reposition le building en fonction de sa position dans la liste
@@ -66,7 +70,10 @@ public class ControlUIBuilding : MonoBehaviour
                     Building building = build.GetComponent<Building>();
 
                     if (!Purchase(building.Cost))
+                    {
+                        StartCoroutine(ErrorSignal(build.GetComponent<Image>()));
                         return;
+                    }
 
                     GameObject
                     .Find("PanelBuilder")
@@ -80,7 +87,24 @@ public class ControlUIBuilding : MonoBehaviour
         parentBuildingsRect.sizeDelta = new Vector2 (adaptedPosX + prefabRect.offsetMax.x, parentBuildingsRect.sizeDelta.y);
     }
 
+    /// <summary>
+    /// Permet d'afficher un signal d'erreur sur une image au joueur
+    /// </summary>
+    /// <param name="obj">L'image a signaler</param>
+    /// <returns></returns>
+    IEnumerator ErrorSignal(Image obj)
+    {
+        Color colorObj = obj.color;
+        obj.color = errorColor;
+        yield return new WaitForSeconds(errorTime);
+        obj.color = colorObj;
+    }
 
+    /// <summary>
+    /// Permet d'acheter un batiment si les fonds sont suffisants
+    /// </summary>
+    /// <param name="cost">Le prix du batiment</param>
+    /// <returns>true si le batiment a été acheté</returns>
     public bool Purchase(int cost)
     {
         ControlUICycle economy = GameObject.Find("GameInfo").GetComponent<ControlUICycle>();

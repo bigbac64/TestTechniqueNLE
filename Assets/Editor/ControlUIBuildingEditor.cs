@@ -10,6 +10,8 @@ public class ControlUIBuildingEditor : Editor
 
     SerializedProperty buildingsProperty;
     SerializedProperty prefabBuildingProperty;
+    SerializedProperty errorColorProperty;
+    SerializedProperty errorTimeProperty;
 
     private void OnEnable()
     {
@@ -17,24 +19,38 @@ public class ControlUIBuildingEditor : Editor
 
         buildingsProperty = serializedObject.FindProperty("buildings");
         prefabBuildingProperty = serializedObject.FindProperty("prefabBuilding");
+        errorColorProperty = serializedObject.FindProperty("errorColor");
+        errorTimeProperty = serializedObject.FindProperty("errorTime");
     }
 
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
 
-               
-        EditorGUILayout.PropertyField(prefabBuildingProperty);
-        serializedObject.ApplyModifiedProperties();
 
         // modifie le contenu de la liste du champ revenues
         EditorGUI.BeginChangeCheck();
+
+        EditorGUILayout.PropertyField(prefabBuildingProperty);
+        serializedObject.ApplyModifiedProperties();
+
         EditorGUILayout.PropertyField(buildingsProperty, true);
+        serializedObject.ApplyModifiedProperties();
+
+        GUI.skin.label.fontStyle = FontStyle.Bold;
+        GUILayout.Label("Failure parameter");
+        GUILayout.Space(10f);
+
+        EditorGUILayout.PropertyField(errorColorProperty);
+        serializedObject.ApplyModifiedProperties();
+
+        EditorGUILayout.PropertyField(errorTimeProperty);
         serializedObject.ApplyModifiedProperties();
         if (EditorGUI.EndChangeCheck())
         {
             uiBuilding.UpdateUIBuilding();
         }
+
 
     }
 }

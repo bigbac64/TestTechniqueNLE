@@ -12,6 +12,8 @@ public class Building : MonoBehaviour
     List<Revenue> revenues;
     [SerializeField]
     int cost;
+    [SerializeField]
+    Color color;
 
     /// <summary>
     /// Permet d'initialisé un Building
@@ -19,16 +21,18 @@ public class Building : MonoBehaviour
     /// <param name="buildingName">Le nom du batiment</param>
     /// <param name="revenues">La liste des revenus</param>
     /// <param name="cost">Le cout du batiment</param>
-    public void Init(string buildingName, List<Revenue> revenues, int cost)
+    public void Init(string buildingName, List<Revenue> revenues, int cost, Color color)
     {
         this.buildingName = buildingName;
         this.revenues = revenues;
         this.cost = cost;
+        this.color = color;
 
         UpdateUITextName();
         UpdateUITextRevenue();
         UpdateUITextCost();
         UpdateUITextNamesRevenue();
+        UpdateUIImgColor();
     }
 
     /// <summary>
@@ -72,6 +76,16 @@ public class Building : MonoBehaviour
         {
             cost = value;
             UpdateUITextCost();
+        }
+    }
+
+    public Color Color
+    {
+        get { return color; }
+        set
+        {
+            color = value;
+            UpdateUIImgColor();
         }
     }
 
@@ -134,5 +148,17 @@ public class Building : MonoBehaviour
         Transform tfNamesRevenue = transform.Find("NamesRevenue");
         if (tfNamesRevenue != null)
             tfNamesRevenue.GetComponent<Text>().text = GetNamesOfRevenue();
+    }
+
+    public void UpdateUIImgColor()
+    {
+        Image img = GetComponent<Image>();
+        if (img != null)
+            img.color = color;
+    }
+
+    public void UpdateUIAll()
+    {
+
     }
 }

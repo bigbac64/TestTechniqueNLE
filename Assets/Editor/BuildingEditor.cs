@@ -11,6 +11,7 @@ public class BuildingEditor : Editor
     SerializedProperty buildingNameProperty;
     SerializedProperty revenuesProperty;
     SerializedProperty costProperty;
+    SerializedProperty colorProperty;
 
     private void OnEnable()
     {
@@ -19,6 +20,7 @@ public class BuildingEditor : Editor
         buildingNameProperty = serializedObject.FindProperty("buildingName");
         revenuesProperty = serializedObject.FindProperty("revenues");
         costProperty = serializedObject.FindProperty("cost");
+        colorProperty = serializedObject.FindProperty("color");
     }
 
     public override void OnInspectorGUI()
@@ -52,5 +54,13 @@ public class BuildingEditor : Editor
             building.UpdateUITextCost();
         }
 
+        // modifie la valeur du champ color
+        EditorGUI.BeginChangeCheck();
+        EditorGUILayout.PropertyField(colorProperty);
+        serializedObject.ApplyModifiedProperties();
+        if (EditorGUI.EndChangeCheck())
+        {
+            building.UpdateUIImgColor();
+        }
     }
 }

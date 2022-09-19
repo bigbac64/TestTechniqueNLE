@@ -12,6 +12,7 @@ public class ControlUIConstructor : MonoBehaviour
     void Start()
     {
         constructions = new List<GameObject>();
+        ResizeContent();
     }
 
     /// <summary>
@@ -24,7 +25,7 @@ public class ControlUIConstructor : MonoBehaviour
         GameObject construct = Instantiate(prefabBuildConstruction, parentBuildings);
 
         // modifie les informations du building construit
-        construct.GetComponent<Building>().Init(building.BuildingName, building.Revenues, building.Cost);
+        construct.GetComponent<Building>().Init(building.BuildingName, building.Revenues, building.Cost, building.Color);
 
         // défini l'action du bouton qui retire le gameobject de la scène et de la liste
         construct.transform
